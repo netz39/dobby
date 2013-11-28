@@ -1,0 +1,39 @@
+{
+  "name": "dobby",
+  "version": "0.0.1",
+  "author": "Sebastian Mai",
+  "keywords": [
+		"announcement",
+		"ical",
+		"calendar"
+  ],
+  "description": "A simple Application announcing events from an ical-feed",
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/netz39/dobby/blob/master/LICENSE"
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/netz39/dobby"
+  },
+  "dependencies": {
+    "twit": "1.1.6",
+    "ical": "0.2.0",
+		"underscore" : "*",
+		"should" : "*",
+		"mocha" : "*",
+		"coffee-script" : "*",
+    "express": "3.1.1",
+    "jade": "*"
+  },
+	"scripts": {
+		"test": "mocha",
+    "start": "node app.js"
+  },
+  "engines": {
+    "node": ">= 0.8.x",
+    "npm": ">= 1.1.x"
+  }
+}
