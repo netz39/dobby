@@ -5,3 +5,6 @@ node_js:
 notifications:
   irc: chat.freenode.net#n39-dev
   email: false
+env:
+  global:
+    secure: DS0sGNomDtGYhIJGGeEI21pIOTezzlzWgENuQ6fR3xLl6OJwxNLIVTaww19w+scinq9uh2r0I5Psg6P3D4rOHDBFRIg+VVKlRyZc5dhpL7JvJZBl6yi6lCn5iHOApZhjJncTncqCUVOZB69QEFbRHvmMpLZgAv8p+FMhymQcWWQ=
