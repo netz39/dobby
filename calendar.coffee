@@ -1,15 +1,15 @@
 ical = require('ical')
 should = require('should')
 util = require('util')
+moment = require('moment')
+moment().format()
 
 class CalendarEvent
-	constructor : (name, start, end=null, description="") ->
-		@name = name
-		@start = start
+	constructor : (@name, start, end=null, @description="") ->
+		@start = moment(start)
 		@name.should.be.ok
 		@start.should.be.a.Date
-		@end = end
-		@description = description
+		@end = moment(end) if end?
 	toString : () ->
 		str = @start.toLocaleString()
 		str = str + @end.toLocaleString() if end?
@@ -22,7 +22,7 @@ fetch_entrys = (ical_url, events, cb) ->
 			util.puts err if err?
 			(events.push(new CalendarEvent(event.summary, event.start, event.end, event.description)) for key, event of data when event.start?)
 			events = events.sort (a,b) ->
-				return a.start.getTime() - b.start.getTime()
+				return a.start.isBefore(b.start)
 			cb(events) if cb
 
 class Calendar
@@ -34,7 +34,7 @@ class Calendar
 
 	sortEntrys : () ->
 		@entrys = @entrys.sort (a,b) ->
-			return a.start.getTime() - b.start.getTime()
+			return a.start.isBefore(b.start)
 
 	addEvent : (entry) ->
 		entry.should.be.ok

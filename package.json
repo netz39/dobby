@@ -26,7 +26,8 @@
 		"mocha" : "*",
 		"coffee-script" : "*",
     "express": "3.1.1",
-    "jade": "*"
+    "jade": "*",
+		"moment" : "*"
   },
 	"scripts": {
 		"test": "mocha",
