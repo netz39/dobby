@@ -1,5 +1,17 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+  table
+    thead
+      tr
+        th start
+        th end
+        th name
+        th description
+    tbody
+      each val in calendar.events
+        tr
+          td=val.start
+          td=val.end
+          td=val.name
+          td=val.description

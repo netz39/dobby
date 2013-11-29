@@ -6,6 +6,10 @@ express = require('express')
 routes = require('./routes')
 http = require('http')
 path = require('path')
+calendar = require('./calendar.coffee')
+util = require('util')
+
+cal = new calendar.Calendar(process.env.DOBBY_ICAL_URL)
 
 app = express()
 
@@ -20,10 +24,15 @@ app.use express.methodOverride()
 app.use app.router
 app.use express.static(path.join(__dirname, 'public'))
 
+
 # development only
 if 'development' == app.get('env')
   app.use express.errorHandler()
 
-app.get '/' , routes.index
+app.get '/' , (req, res) ->
+	res.render 'index', {
+		title: 'Calendar',
+		calendar: cal
+	}
 
 http.createServer(app).listen(app.get('port'))

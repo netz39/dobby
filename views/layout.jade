@@ -2,6 +2,18 @@ doctype 5
 html
   head
     title= title
-    link(rel='stylesheet', href='/stylesheets/style.css')
+    meta(name="viewport" content="width=device-width, initial-scale=1.0")
+    link(rel='stylesheet', href='/stylesheets/foundation.css')
+    link(rel='stylesheet', href='/stylesheets/normalize.css')
+    script(src="/javascripts/vendor/custom.modernizr.js")
   body
+    script(src="/javascripts/vendor/jquery.js")
+    script(src='/javascripts/foundation.min.js')
+    script
+      $(document).foundation();
+    nav(class="top-bar" data-topbar)
+      ul(class="title-area")
+        li(class="name")
+          h1
+            a(href="#")=title
     block content
