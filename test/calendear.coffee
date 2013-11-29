@@ -8,7 +8,7 @@ describe 'calendar.coffee', ->
 			test = () ->
 				cal.events.should.not.be.empty
 				done()
-			timers.setTimeout(test, 500)
+			timers.setTimeout(test, 1500)
 			
 	describe 'CalendarEvent', ->
 		it 'should implement start, name, description and summary', ->
