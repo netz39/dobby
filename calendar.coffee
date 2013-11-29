@@ -22,7 +22,7 @@ fetch_entrys = (ical_url, events, cb) ->
 			util.puts err if err?
 			(events.push(new CalendarEvent(event.summary, event.start, event.end, event.description)) for key, event of data when event.start?)
 			events = events.sort (a,b) ->
-				return a.start.isBefore(b.start)
+				return a.start.isAfter(b.start)
 			cb(events) if cb
 
 class Calendar
@@ -34,7 +34,7 @@ class Calendar
 
 	sortEntrys : () ->
 		@entrys = @entrys.sort (a,b) ->
-			return a.start.isBefore(b.start)
+			return a.start.isAfter(b.start)
 
 	addEvent : (entry) ->
 		entry.should.be.ok
@@ -55,7 +55,7 @@ class Calendar
 				util.puts entry
 			if entry.start.isAfter(start) and entry.start.isBefore(end)
 				_result.push entry
-		eturn _result
+		return _result
 
 
 exports.Calendar = Calendar
