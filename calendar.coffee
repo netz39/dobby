@@ -48,5 +48,15 @@ class Calendar
 	toString : () ->
 		return (entry.toString() for entry in @entrys).join("\n\n")
 
+	getRange : (start, end) ->
+		_result = []
+		for entry in @entrys
+			if not entry.start?
+				util.puts entry
+			if entry.start.isAfter(start) and entry.start.isBefore(end)
+				_result.push entry
+		eturn _result
+
+
 exports.Calendar = Calendar
 exports.CalendarEvent = CalendarEvent

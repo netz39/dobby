@@ -1,5 +1,6 @@
 calendar = require('../calendar.coffee')
 timers = require('timers')
+util = require('util')
 moment = require('moment')
 moment().format()
 
@@ -38,9 +39,11 @@ describe 'calendar.coffee', ->
 			test = (start, end) ->
 				r1 = cal2.getRange start, end
 				for entry in r1
-					start.isAfter(entry.start).should.be.ok
-					end.isBefore(entry.start).should.be.ok
-			test moment(), moment().add('months', 2)
+					start.isBefore(entry.start).should.be.ok
+					end.isAfter(entry.start).should.be.ok
+			test moment(), moment().add('months', 1)
+			test moment(), moment().subtract('months', 1)
+			test moment().add('months', 1), moment().subtract('weeks', 3)
 
 
 
