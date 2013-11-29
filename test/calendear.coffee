@@ -9,6 +9,10 @@ describe 'calendar.coffee', ->
 				cal.events.should.not.be.empty
 				done()
 			timers.setTimeout(test, 1500)
+		it 'should implement an addEvent-Method', ->
+			cal2 = new calendar.Calendar()
+			cal2.addEvent(calendar.CalendarEvent('Foo', new Date()))
+			cal2.getNames().should.contain('Foo')
 			
 	describe 'CalendarEvent', ->
 		it 'should implement start, name, description and summary', ->

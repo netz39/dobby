@@ -28,6 +28,9 @@ class Calendar
 			events = events.sort (a,b) ->
 				return a.start.getTime() - b.start.getTime()
 
+	getNames : () ->
+		return (event.name for event in events)
+
 	toString : () ->
 		return (event.toString() for event in @events).join("\n\n")
 
