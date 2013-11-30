@@ -35,4 +35,10 @@ app.get '/' , (req, res) ->
 		calendar: cal
 	}
 
+app.get '/raw' , (req, res) ->
+	res.render 'raw', {
+		title: 'Calendar',
+		raw: cal.raw
+	}
+
 http.createServer(app).listen(app.get('port'))

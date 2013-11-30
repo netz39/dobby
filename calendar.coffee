@@ -4,6 +4,8 @@ util = require('util')
 moment = require('moment')
 moment().format()
 
+raw = []
+
 class CalendarEvent
 	constructor : (@name, start, end=null, @description="") ->
 		@start = moment(start)
@@ -16,20 +18,22 @@ class CalendarEvent
 		str = str + " : " + @name + "\n"
 		str = str + @description
 
-fetch_entrys = (ical_url, events, cb) ->
+fetch_entrys = (ical_url, events, raw, cb) ->
 		util.puts "fetching entries from #{ical_url}"
 		ical.fromURL ical_url , {} , (err, data) ->
+			util.puts "ok" if data?
+			raw.push util.inspect(data)
 			util.puts err if err?
 			(events.push(new CalendarEvent(event.summary, event.start, event.end, event.description)) for key, event of data when event.start?)
 			events = events.sort (a,b) ->
 				return a.start.isAfter(b.start)
-			cb(events) if cb
+			cb(events, data) if cb?
 
 class Calendar
 	constructor : (@ical_url, @entrys=[], cb) ->
+		@raw = []
 		if @ical_url
-			fetch_entrys @ical_url, @entrys, (entrys) ->
-				@entrys = entrys
+			fetch_entrys @ical_url, @entrys, @raw, (entrys, data) ->
 				cb() if cb?
 
 	sortEntrys : () ->
@@ -60,3 +64,4 @@ class Calendar
 
 exports.Calendar = Calendar
 exports.CalendarEvent = CalendarEvent
+exports.raw = raw
