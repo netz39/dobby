@@ -6,12 +6,18 @@ moment().format()
 
 describe 'calendar.coffee', ->
 	describe 'Calendar', ->
+		cal = new calendar.Calendar(process.env.DOBBY_ICAL_URL, [])
 		it 'should be able to fetch ical entrys', (done) ->
-			cal = new calendar.Calendar(process.env.DOBBY_ICAL_URL, [])
 			test = () ->
 				cal.entrys.should.not.be.empty
 				done()
 			timers.setTimeout(test, 1500)
+		it 'should display the raw data from remote ical', (done) ->
+			test = () ->
+				cal.raw.should.not.be.empty
+				done()
+			timers.setTimeout(test, 1500)
+
 		cal2 = new calendar.Calendar()
 		it 'should implement an addEvent-Method', ->
 			cal2.addEvent(new calendar.CalendarEvent('Foo', new Date()))
