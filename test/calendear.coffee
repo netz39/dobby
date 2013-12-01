@@ -55,8 +55,10 @@ describe 'calendar.coffee', ->
 
 			
 	describe 'CalendarEvent', ->
+		d = new Date()
+		e = new calendar.CalendarEvent("foobar", d)
 		it 'should implement start, name, description and summary', ->
-			d = new Date()
-			e = new calendar.CalendarEvent("foobar", d)
 			e.start.isSame(d).should.be.true
 			e.name.should.equal "foobar"
+		it 'should implement a unique identifier', ->
+			e.uuid.should.exist

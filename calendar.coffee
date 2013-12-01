@@ -3,15 +3,15 @@ should = require('should')
 util = require('util')
 moment = require('moment')
 moment().format()
-
-raw = []
+gen_uuid = require('node-uuid').v4
 
 class CalendarEvent
-	constructor : (@name, start, end=null, @description="") ->
+	constructor : (@name, start, end=null, @description="", @uuid=gen_uuid()) ->
 		@start = moment(start)
 		@name.should.be.ok
 		@start.should.be.a.Date
 		@end = moment(end) if end?
+
 	toString : () ->
 		str = @start.toLocaleString()
 		str = str + @end.toLocaleString() if end?
@@ -64,4 +64,3 @@ class Calendar
 
 exports.Calendar = Calendar
 exports.CalendarEvent = CalendarEvent
-exports.raw = raw
