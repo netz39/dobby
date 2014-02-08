@@ -1,7 +1,4 @@
-
 # Module dependencies.
-
-
 express = require('express')
 routes = require('./routes')
 http = require('http')
@@ -9,7 +6,8 @@ path = require('path')
 calendar = require('./calendar.coffee')
 util = require('util')
 
-cal = new calendar.Calendar(process.env.DOBBY_ICAL_URL)
+process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = '0'
+cal = new calendar.Calendar(process.env.DOBBY_ICAL_URL, process.env.DOBBY_ICAL_USER, process.env.DOBBY_ICAL_PASS)
 
 app = express()
 
