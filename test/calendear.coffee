@@ -22,7 +22,7 @@ describe "calendar.coffee", ->
 		cal2 = new calendar.Calendar()
 		it "should implement an addEvent-Method", ->
 			cal2.addEvent(new calendar.CalendarEvent("Foo", new Date()))
-			cal2.getNames().should.contain("Foo")
+			cal2.getNames().should.containEql("Foo")
 		it "should display all events in a certian timerange", ->
 			now = moment()
 			i = 1
