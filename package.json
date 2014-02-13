@@ -28,7 +28,8 @@
     "express": "3.1.1",
     "jade": "*",
 		"moment" : "*",
-		"node-uuid" : "*"
+		"node-uuid" : "*",
+		"rrule" : "*"
   },
 	"scripts": {
 		"test": "mocha",

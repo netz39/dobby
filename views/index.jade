@@ -5,13 +5,11 @@ block content
     thead
       tr
         th start
-        th end
         th name
         th description
     tbody
       each val in calendar.entrys
         tr
-          td=val.start
-          td=val.end
+          td=val.start.toISOString()
           td=val.name
           td=val.description

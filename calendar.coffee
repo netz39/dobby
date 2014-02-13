@@ -4,9 +4,10 @@ util = require('util')
 moment = require('moment')
 moment().format()
 gen_uuid = require('node-uuid').v4
+RRule = require('rrule').RRule
 
 class CalendarEvent
-	constructor : (@name, start, end=null, @description="", @uuid=gen_uuid()) ->
+	constructor : (@name="fu!", start, end=null, @description="", @uuid=gen_uuid()) ->
 		@start = moment(start)
 		@name.should.be.ok
 		@start.should.be.a.Date
@@ -18,17 +19,34 @@ class CalendarEvent
 		str = str + " : " + @name + "\n"
 		str = str + @description
 
+addReoccuringEvent = (event, events) ->
+	dates = []
+	event.rrule.origOptions.dtstart = event.start
+	event.rrule = event.rrule.clone()
+	dates = event.rrule.between(moment().toDate(), moment().add('years', 1).toDate())
+	util.puts event.rrule.toText()
+	util.puts event.rrule.toString()
+	util.puts event.start
+	util.puts util.inspect(dates)
+	for i,d of dates
+		events.push new CalendarEvent(event.summary, d, null, event.description)
+	events = events.sort (a,b) ->
+		return a.start.diff(b.start)
+
+
 fetch_entrys = (ical_url, opts, events, raw, cb) ->
 		util.puts "fetching entries from #{ical_url}"
-		util.puts util.inspect(opts)
 		ical.fromURL ical_url , opts , (err, data) ->
 			util.puts "ok" if data?
-			util.puts util.inspect(data)
-			raw.push util.inspect(data)
+			raw.push util.inspect(data, { depth : 5 })
 			util.puts err if err?
-			(events.push(new CalendarEvent(event.summary, event.start, event.end, event.description)) for key, event of data when event.start?)
+			for key, event of data when event.start? and event.summary?
+				if event.rrule?
+					addReoccuringEvent(event, events)
+				else
+					events.push(new CalendarEvent(event.summary, event.start, event.end, event.description))
 			events = events.sort (a,b) ->
-				return a.start.isAfter(b.start)
+				return a.start.diff(b.start)
 			cb(events, data) if cb?
 
 class Calendar
@@ -46,10 +64,10 @@ class Calendar
 				}
 			fetch_entrys @ical_url, @opts,  @entrys, @raw, (entrys, data) ->
 				cb() if cb?
-
+	
 	sortEntrys : () ->
 		@entrys = @entrys.sort (a,b) ->
-			return a.start.isAfter(b.start)
+			return a.start.diff(b.start)
 
 	addEvent : (entry) ->
 		entry.should.be.ok
@@ -70,6 +88,8 @@ class Calendar
 				util.puts entry
 			if entry.start.isAfter(start) and entry.start.isBefore(end)
 				_result.push entry
+		_result = _result.sort (a,b) ->
+			return a.start.diff(b.start)
 		return _result
 
 
